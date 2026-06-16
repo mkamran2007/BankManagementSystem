@@ -254,7 +254,10 @@ void transfer() {
     }
     
 }
-
+// View Account Details
+void viewAccDetail() {
+    
+}
 void choiceHandler(int ch) {
     if(ch == 1) {
         createAccount();
