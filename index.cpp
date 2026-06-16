@@ -37,6 +37,7 @@ void createAccount() {
     cout << "Enter Your Name : ";
     cin >> name;
     file << id << "," << name << ",0" <<endl;
+    file.close();
     cout << "Account Created Sucessfully!";
 }
 // Deposit Function
@@ -158,6 +159,102 @@ void withdraw() {
     }
 }
 
+void transfer() {
+    int userId, transId;
+    cout << "Enter your Account ID : ";
+    cin >> userId;
+
+    ifstream file("accounts.txt");
+
+    vector<Account> acc;
+    string line, id, name, balance;
+    bool found = false;
+
+    int i = 0, pos = 0;
+
+    while(getline(file, line)) {
+        stringstream ss(line);
+        getline(ss, id, ',');
+        getline(ss, name, ',');
+        getline(ss, balance, ',');
+
+        Account tempAcc;
+
+        tempAcc.id = stoi(id);
+        tempAcc.name = name;
+        tempAcc.balance = stof(balance);
+
+        acc.push_back(tempAcc);
+
+        if(userId == tempAcc.id) {
+            found = true;
+            pos = i;
+        }
+        i++;
+    }
+    file.close();
+    
+    if(found) {
+        cout << "Enter Account ID to want to Transfer : ";
+        cin >> transId;
+
+        ifstream file("accounts.txt");
+
+        found = false;
+
+        i = 0;
+        int transPos = 0;
+
+        while(getline(file, line)) {
+            stringstream ss(line);
+            getline(ss, id, ',');
+            getline(ss, name, ',');
+            getline(ss, balance, ',');
+
+            Account tempAcc;
+
+            tempAcc.id = stoi(id);
+            tempAcc.name = name;
+            tempAcc.balance = stof(balance);
+
+            if(transId == tempAcc.id) {
+                found = true;
+                transPos = i;
+            }
+            i++;
+        }
+        file.close();
+
+        if(found) {
+            int amount;
+            cout << "Enter Amount to Transfer : ";
+            cin >> amount;
+            
+            while(amount > acc[pos].balance || amount < 0) {
+                cout << "Enter Valid Amount : ";
+                cin >> amount;
+            }
+            acc[pos].balance -= amount;
+            acc[transPos].balance += amount;
+
+            ofstream f("accounts.txt");
+            for(Account val: acc) {
+                f << val.id << "," << val.name << "," << val.balance << endl;
+            }
+            file.close();
+            cout << "Amount Transferred Successfully!";
+        }
+        else {
+            cout << "Transfer Account not Found!";
+        }
+        
+    }
+    else{
+        cout << "User Account not Found!";
+    }
+    
+}
+
 void choiceHandler(int ch) {
     if(ch == 1) {
         createAccount();
@@ -167,6 +264,9 @@ void choiceHandler(int ch) {
     }
     if(ch == 3) {
         withdraw();
+    }
+    if(ch == 4) {
+        transfer();
     }
 }
 int main() {
