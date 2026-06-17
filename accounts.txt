@@ -1,5 +1,7 @@
-1001,kamran,4000
+1001,kamran,3000
 1004,zain,1200
 1005,muneeb,300
-1002,Gujjar,800
-1003,burhan,30
+1002,Gujjar,1800
+1006,laraib,2000
+1003,burhan,0
+1007,zain akbar,0
