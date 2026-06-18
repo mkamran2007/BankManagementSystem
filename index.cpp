@@ -16,7 +16,7 @@ void viewAll();
 void searchByName();
 void searchByBalance();
 void deleteAccount();
-int choiceHandler(int ch);
+void choiceHandler(int ch);
 void printMenu();
 // ====== MAIN FUNCTION ====== 
 int main() {
@@ -47,7 +47,7 @@ void printMenu() {
     cout << "\nENTER YOUR CHOICE : ";
 }
 // ====== HANDLING the USER CHOICE ====== 
-int choiceHandler(int ch) {
+void choiceHandler(int ch) {
     if(ch == 1) createAccount();
     else if(ch == 3) withdraw();
     else if(ch == 2) deposit();
@@ -57,7 +57,7 @@ int choiceHandler(int ch) {
     else if(ch == 7) searchByName();
     else if(ch == 8) searchByBalance();
     else if(ch == 9) deleteAccount();
-    else if(ch == 10) return 10;
+    else if(ch == 10) cout << "Exiting...";
     else cout << "Invalid Choice.";
     
 }
