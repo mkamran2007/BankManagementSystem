@@ -1,4 +1,4 @@
-1001,kamran,3000
+1001,kamran,2700
 1004,zain,1200
 1005,muneeb,300
 1002,Gujjar,1800

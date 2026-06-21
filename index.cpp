@@ -46,6 +46,7 @@ void printMenu() {
     
     cout << "\nENTER YOUR CHOICE : ";
 }
+
 // ====== HANDLING the USER CHOICE ====== 
 int choiceHandler(int ch) {
     if(ch == 1) createAccount();
@@ -66,10 +67,14 @@ void createAccount() {
     int userId;
     cout << "\nEnter Unique Account ID : ";
     cin >> userId;
-
+    
     engine e;
     search(e, userId);
-    if(!e.found) {
+    if(userId <= 0 ) {
+        cout << "Invalid Account ID : " << endl;
+        createAccount();
+    }
+    else if(!e.found) {
         ofstream file("accounts.txt", ios::app);
         string name;
         cout << "Enter Your Name : ";
@@ -80,7 +85,7 @@ void createAccount() {
         cout << "Account Created Sucessfully!";
     }
     else {
-        cout << "Account already Exists!";
+        cout << "Account already Exists!" << endl;
         createAccount();
     }
 }
@@ -96,7 +101,7 @@ void deposit() {
         int amount;
         cout << "Enter amount to Deposit : ";
         cin >> amount;
-        while(amount <= 0) {
+        while(amount <= 0) { // >>> validating the amount to deposit
             cout << "Enter Valid Amount : ";
             cin >> amount;
         }
@@ -116,7 +121,7 @@ void deposit() {
 }
 // ====== WITHDRAW MONEY FUNCTION ====== 
 void withdraw() {
-    cout << "Enter Account ID : ";
+    cout << "\nEnter Account ID : ";
     int userId;
     cin >> userId;
 
@@ -127,7 +132,8 @@ void withdraw() {
         cout << "Enter amount to Withdraw : ";
         cin >> amount;
         while(amount > e.acc[e.pos].balance || amount <= 0) {
-            cout << "Enter Valid Amount : ";
+            cout << "Error : Invalid Amount or Insufficient Balance." << endl;
+            cout << ">>> Enter Valid Amount : ";
             cin >> amount;
         }
         e.acc[e.pos].balance -= amount;
@@ -136,7 +142,7 @@ void withdraw() {
             file << val.id << "," << val.name << "," << val.balance << endl;
         }
         file.close();
-        cout << amount << " Withdrawed from Your Account!";
+        cout << amount << " Withdrawn from Your Account!";
     }
     else {
         cout << "Account not Found!";
@@ -145,7 +151,7 @@ void withdraw() {
 // ====== TRANSFER MONERY FUNCTION ====== 
 void transfer() {
     int userId, transId;
-    cout << "Enter your Account ID : ";
+    cout << "\nEnter your Account ID : ";
     cin >> userId;
 
     engine e;
@@ -166,7 +172,8 @@ void transfer() {
             cin >> amount;
             
             while(amount > e.acc[userPos].balance || amount <= 0) {
-                cout << "Enter Valid Amount : ";
+                cout << "Error : Invalid Amount or Insufficient Balance." << endl;
+                cout << ">>> Enter Valid Amount : ";
                 cin >> amount;
             }
             e.acc[userPos].balance -= amount;
